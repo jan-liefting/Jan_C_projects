@@ -7,7 +7,7 @@
  *  knock knock server demonstrates read and write to client
  *
  */
-//includes
+//include files
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>

@@ -1,0 +1,44 @@
+The header files can be placed in /usr/include or /usr/local/include
+Or they can be placed in a dedicated directory, e.g. /my_header_files. 
+In that case there needs to be entry in the IDE under Properties-> C/C++ Build -> Settings
+-> GCC Compiler -> Includes
+...
+You can add the .o files into a library and store them seperately.
+To add files to a library use:
+
+ar -rcs libhfsecurity.a encrypt.o checksum.o
+
+ar: archive command
+r: update if file exists
+c: create without feedback
+s: create index at start of the archive
+
+Use nm to view the archive
+
+nm libc.a
+or
+ar -t <filename>
+
+To extract an object file use:
+
+ar -x libhfsecurity.a encrypt.o
+
+When done, add the library to the context of the project; use: 
+Properties-> C/C++ Build -> Settings -> GCC C Linker -> Libaries -> "name the library and
+its search path"
+E.g.: "hfsecurity" at path: /my_library_files;
+Note: the file is actually called: "libhfsecurity.a" !!
+
+If you place the .h and the .a files in the standard directories that GCC is looking in,
+you don't have to specify additional places to search.
+
+for include .h files:
+/usr/include or /usr/local/include
+
+for library or .a files:
+/usr/lib or /usr/local/lib
+
+When compiling with a static library, an executable file is produced that has all
+code necessary to run.
+
+A dynamic library is linked at runtime with the application by the OS.

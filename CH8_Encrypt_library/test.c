@@ -20,5 +20,6 @@ int main() {
 	encrypt(s);
 	printf("Decrypted back to '%s'\n", s);
 	printf("Checksum is %i\n", checksum(s));
+	//test
 	return 0;
 }

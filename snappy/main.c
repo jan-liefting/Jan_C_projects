@@ -13,6 +13,7 @@
 /*** globals ***/
 /*** prototypes ***/
 /*** see Snappy.h file ***/
+//
 /*
  *
  */

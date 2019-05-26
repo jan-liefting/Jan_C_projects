@@ -23,5 +23,6 @@ int main() {
     }
     printf("There are %i cards\n", (decks * 52));
     return EXIT_SUCCESS;
+//test
 }
 

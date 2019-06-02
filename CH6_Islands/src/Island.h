@@ -24,6 +24,7 @@ typedef struct island{
 //prototypes
 void display(island*);
 island* create(char*);
+void release(island*);
 
 
 #endif /* ISLAND_H_ */

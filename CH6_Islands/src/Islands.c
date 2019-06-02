@@ -11,19 +11,22 @@
 
 int main(){
 
+	island *start = NULL;
+	island *i = NULL;
+	island *next = NULL;
+
 	char name[80];
-	fgets(name, 80, stdin);
-	island *p_island0 = create(name);
-	fgets(name, 80, stdin);
-	island *p_island1 = create(name);
+	for(;fgets(name, 80, stdin) != NULL; i = next){
+		next = create(name);
+		if(start == NULL) // sets the start of the linked list
+			start = next;
+		if(i != NULL)
+			i->next = next;
+	}
+	display(start);
 
-	island amity = {"Amity", "09:00", "17:00", NULL};
-	island craggy = {"Craggy", "09:00", "17:00", NULL};
-	island isla_nublar = {"Isla Nublar", "09:00", "17:00", NULL};
-	island shutter = {"Shutter", "09:00", "17:00", NULL};
+	release(start);
 
-	display(p_island0);
-	display(p_island1);
 	return 1;
 }
 
@@ -35,7 +38,7 @@ void display(island *start){
 	}
 }
 
-island* create(char *name){
+island *create(char *name){
 	island *i = malloc(sizeof(island));
 	i->name = strdup(name);
 	i->opens = "09:00";
@@ -43,4 +46,15 @@ island* create(char *name){
 	i->next = NULL;
 
 	return i;
+}
+
+void release(island* start){
+	island *i = start;
+	island *next = NULL;
+	for(;i != NULL; i = next){
+		next = i->next;
+		free(i->name);
+		free(i);
+	}
+
 }

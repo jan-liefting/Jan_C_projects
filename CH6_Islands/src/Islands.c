@@ -15,13 +15,16 @@ int main(){
 	island *i = NULL;
 	island *next = NULL;
 
-	char name[80];
-	for(;fgets(name, 80, stdin) != NULL; i = next){
+	size_t n = 80;
+	char name[n];
+
+	for(;fgets(name, n, stdin) != NULL; i = next){
 		next = create(name);
 		if(start == NULL) // sets the start of the linked list
 			start = next;
 		if(i != NULL)
 			i->next = next;
+
 	}
 	display(start);
 

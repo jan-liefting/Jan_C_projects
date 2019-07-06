@@ -24,7 +24,7 @@ int yes_no(char *question) {
 
 node* create(char *question) {
 	node *n = malloc(sizeof(node));
-	n->question = strdup(question);//issue is: n->question was al gevuld bij initializatie
+	n->question = strdup(question);
 	n->no = NULL;
 	n->yes = NULL;
 	return n;
@@ -75,8 +75,8 @@ int main() {
 						"Give me a question that is TRUE for %s but not for %s? ",
 						suspect, current->question);
 				fgets(question, 80, stdin);
-				free(current->question);
-				current->question = strdup(question);
+				free(current->question); //eerst de oude opruimen
+				current->question = strdup(question); //dan de nieuwe maken
 				break;
 			}
 		}

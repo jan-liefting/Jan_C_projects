@@ -33,3 +33,14 @@ int compare_scores_desc(const void* a, const void* b){
 int compare_names(const void* a, const void* b){
 	return strcmp(*(char**)a, *(char**)b);
 }
+// char* names[index];
+// index 0;  *(names[0]) = "Karen/0"
+// index 1;  *([names[1]) = "Mark/0"
+//
+// a = ptr;  *prt = names[i];  names[i] heeft type char*;  dus a heeft type char**;
+// b = ptr;  *prt = names[j];  names[j] heeft type char*;  dus a heeft type char**;
+//
+// a = ptr --> index i --> "Karen/0"
+// (char**) a; --> (char*) index i --> "Karen/0"
+//
+

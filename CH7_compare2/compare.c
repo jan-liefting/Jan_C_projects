@@ -36,7 +36,7 @@ int compare_names(const void* a, const void* b){
 //
 // char* names[index];
 // index=0;  *(names[0]) = "Karen/0"
-// index=1;  *([names[1]) = "Mark/0"
+// index=1;  *(names[1]) = "Mark/0"
 //
 // a = ptr;  *prt = names[i];  names[i] heeft type char*;  dus a heeft type char**;
 // b = ptr;  *prt = names[j];  names[j] heeft type char*;  dus a heeft type char**;

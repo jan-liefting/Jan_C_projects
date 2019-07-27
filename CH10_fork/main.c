@@ -28,7 +28,8 @@ int main(int argc, char *argv[]) {
 //			fprintf(stderr, "Can't fork the process %s\n", strerror(errno));
 //			return 1;
 //		}
-//		if (!pid) { // this is executed by the child process
+//		if (!pid) { // this is executed by the child process only
+					// change the child process by changing it to Python
 			fprintf(stdout,"Looking for: %s\n", phrase);
 			if (execle("/usr/bin/python", "/usr/bin/python", "/home/jan/Desktop/rssgossip.py",
 					phrase, NULL, vars) == -1) {

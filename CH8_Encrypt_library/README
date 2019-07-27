@@ -26,16 +26,17 @@ ar -x libhfsecurity.a encrypt.o
 When done, add the library to the context of the project; use: 
 Properties-> C/C++ Build -> Settings -> GCC C Linker -> Libaries -> "name the library and
 its search path"
-E.g.: "hfsecurity" at path: /my_library_files;
+E.g.: library (-l) "hfsecurity" at Library search path (-L) path: /my_library_files;
+
 Note: the file is actually called: "libhfsecurity.a" !!
 
 If you place the .h and the .a files in the standard directories that GCC is looking in,
 you don't have to specify additional places to search.
 
-for include .h files:
+for include .h files the standard directores are:
 /usr/include or /usr/local/include
 
-for library or .a files:
+for library or .a files the standard directories are:
 /usr/lib or /usr/local/lib
 
 When compiling with a static library, an executable file is produced that has all

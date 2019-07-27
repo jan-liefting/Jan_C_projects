@@ -7,8 +7,8 @@
 
 //includes
 #include <stdio.h>
-#include <Encrypt.h>
-#include <Checksum.h>
+#include "Encrypt.h"
+#include "Checksum.h"
 
 int main() {
 	char s[] = "Speak friend and enter";

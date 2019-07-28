@@ -31,11 +31,11 @@ int main(int argc, char *argv[]) {
 //		if (!pid) { // this is executed by the child process only
 					// change the child process by changing it to Python
 			fprintf(stdout,"Looking for: %s\n", phrase);
-			if (execle("/usr/bin/python", "/usr/bin/python", "/home/jan/Desktop/rssgossip.py",
-					phrase, NULL, vars) == -1) {
+			if (execle("/usr/bin/python", "usr/bin/python", "/home/jan/Desktop/rssgossip.py",
+					"Trump", NULL, vars) == -1) {
 				fprintf(stderr, "Can't start Python %s\n", strerror(errno));
 				return 1;
-//			}
-		}
+			}
+//		}
 	}
 }

@@ -41,11 +41,11 @@ int main(int argc, char *argv[]) {
 		}
 
 		pid = fork();
-
 		/* fork()
 		 function returns 0 to the child process, and it will return a
 		 nonzero value to the parent process
 		 */
+
 		if (pid == -1) { //there is an issue with the forking
 			error("Can't fork the process %s\n");
 			return 1;
@@ -61,10 +61,9 @@ int main(int argc, char *argv[]) {
 			fprintf(stderr, "at: %s\n", var);
 			fprintf(stderr, "with script: %s\n", scriptname);
 			// transfer process over to python
-			if (execle(python, python, scriptname, "-u", phrase, NULL, vars) == -1) {
+			if (execle(python, python, scriptname, "-u", phrase, NULL, vars) == -1)
 				error("Can't run script %s\n");
-				return 1;
-			}
+
 			// this section is never executed by the child
 		} else { //executed by the parent
 			if (dup2(fd[0], 0) == -1) //redirect the parent standard input to the pipe output
@@ -100,10 +99,28 @@ void error(char* msg) {
 
 void open_url(char *url) {
 	char launch[255];
-//	sprintf(launch, "cmd /c start %s", url);
-//	system(launch);
-	sprintf(launch, "x-www-browser '%s' &", url);
-	system(launch);
-//	sprintf(launch, "open '%s'", url);
-//	system(launch);
+	pid_t pid;
+
+	pid = fork();
+	/* fork()
+	 function returns 0 to the child process, and it will return a
+	 nonzero value to the parent process
+	 */
+
+	if (pid == -1) { //there is an issue with the forking
+		error("Can't fork the process %s\n");
+		return 1;
+	}
+	if (!pid) { // this is executed by the child process only
+		//	sprintf(launch, "cmd /c start %s", url);
+		//	system(launch);
+		if (execle(x-www-browser, x-www-browser, url) == -1)
+			error("Can't run browser %s\n", url);
+
+		// sprintf(launch, "x-www-browser '%s' &", url);
+		// system(launch);
+		//	sprintf(launch, "open '%s'", url);
+		//	system(launch);
+	}
+
 }

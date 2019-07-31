@@ -82,6 +82,7 @@ int main(int argc, char *argv[]) {
 			}
 		}
 	}
+
 	int pid_status[times];
 	for (int i = 0; i < times; i++) {
 		if (waitpid(pidArray[i], pid_status + i, 0) == -1){

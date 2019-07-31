@@ -98,7 +98,6 @@ void error(char* msg) {
 }
 
 void open_url(char *url) {
-	char launch[255];
 	pid_t pid;
 
 	pid = fork();
@@ -107,20 +106,12 @@ void open_url(char *url) {
 	 nonzero value to the parent process
 	 */
 
-	if (pid == -1) { //there is an issue with the forking
+	if (pid == -1) //there is an issue with the forking
 		error("Can't fork the process %s\n");
-		return 1;
-	}
-	if (!pid) { // this is executed by the child process only
-		//	sprintf(launch, "cmd /c start %s", url);
-		//	system(launch);
-		if (execle(x-www-browser, x-www-browser, url) == -1)
-			error("Can't run browser %s\n", url);
 
-		// sprintf(launch, "x-www-browser '%s' &", url);
-		// system(launch);
-		//	sprintf(launch, "open '%s'", url);
-		//	system(launch);
-	}
-
+	if (!pid) // this is executed by the child process only
+		if (execl("x-www-browser", "x-www-browser", url, NULL) == -1)
+			error("Can't run browser %s\n");
+			// the child never arrives here!
+	return;
 }

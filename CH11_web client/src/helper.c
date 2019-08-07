@@ -8,13 +8,6 @@
  *	helper functions
  */
 
-//includes
-#include <sys/socket.h>
-#include <arpa/inet.h>
-#include <string.h>
-#include <stdio.h>
-#include <errno.h>
-#include <stdlib.h>
 
 #include "helper.h"
 
@@ -54,6 +47,27 @@ int open_listener_socket(){
 	if (s == -1)
 		error("Can't open socket");
 	return s;
+}
+
+/*
+ * open_socket opens a socket based on a host url
+ */
+int open_socket(char *host, char *port) {
+	struct addrinfo *res;
+	struct addrinfo hints;
+	memset(&hints, 0, sizeof(hints));
+	hints.ai_family = PF_UNSPEC;
+	hints.ai_socktype = SOCK_STREAM;
+	if (getaddrinfo(host, port, &hints, &res) == -1)
+		error("Can't resolve the address");
+	int d_sock = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
+	if (d_sock == -1)
+		error("Can't open socket");
+	int c = connect(d_sock, res->ai_addr, res->ai_addrlen);
+	freeaddrinfo(res);
+	if (c == -1)
+		error("Can't connect to socket");
+	return d_sock;
 }
 
 /*

@@ -19,22 +19,26 @@ void open_url(char*);
 int main(int argc, char *argv[]) {
 
 	char *feeds[] = { "http://feeds.bbci.co.uk/news/rss.xml",
-			"http://rss.cnn.com/rss/cnn_topstories.rss" };
+			"http://feeds.nos.nl/nosnieuwsalgemeen" };
 	char *scriptname = "/home/jan/Desktop/rssgossip.py";
 	char *python = "/usr/bin/python";
 	int times = 2;
 	char *phrase = argv[1];
 	int i;
 	FILE *f = fopen("stories.txt", "w");
-	pid_t pid;
-	pid_t pidArray[times];
 	if (!f)
 		error("Can't open stories.txt");
+
+	pid_t pid;
+	pid_t pidArray[times];
 
 	for (i = 0; i < times; i++) {
 		char var[255];
 		sprintf(var, "RSS_FEED=%s", feeds[i]);
 		char *vars[] = { var, NULL };
+
+		// need to create these for each iteration
+		// because when the child 'dies' it closes the pipe is closed
 		int fd[2];
 		if (pipe(fd) == -1) {
 			error("Can't create the pipe");
@@ -45,15 +49,11 @@ int main(int argc, char *argv[]) {
 		 function returns 0 to the child process, and it will return a
 		 nonzero value to the parent process
 		 */
-
 		if (pid == -1) { //there is an issue with the forking
 			error("Can't fork the process %s\n");
 			return 1;
 		}
 		if (!pid) { // this is executed by the child process only
-
-//			if (dup2(fileno(f), 1) == -1) //redirect standard output to file f
-//				error("Can't redirect the Standard Output");
 			close(fd[0]); //close the read part of the pipe
 			if (dup2(fd[1], 1) == -1) //redirect the child standard output to the pipe write
 				error("Can't redirect the Standard Output of the child process");
@@ -108,11 +108,11 @@ void open_url(char *url) {
 	 */
 
 	if (pid == -1) //there is an issue with the forking
-		error("Can't fork the process %s\n");
+		error("Can't fork a new browser process\n");
 
 	if (!pid) // this is executed by the child process only
-		if (execl("x-www-browser", "x-www-browser", url, NULL) == -1)
-			error("Can't run browser %s\n");
+		if (execl("/usr/bin/x-www-browser", "/usr/bin/x-www-browser", url, NULL) == -1)
+			error("Can't run browser");
 			// the child never arrives here!
 	return;
 }

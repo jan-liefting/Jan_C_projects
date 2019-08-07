@@ -10,6 +10,17 @@
 #ifndef SRC_HELPER_H_
 #define SRC_HELPER_H_
 
+
+// includes
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <netdb.h>
+#include <string.h>
+#include <stdio.h>
+#include <errno.h>
+#include <stdlib.h>
+
 /*
  * error prints an error message to the stderr
  */
@@ -19,6 +30,11 @@ void error(char* message);
  * open_listener creates a socket
  */
 int open_listener_socket();
+
+/*
+ * open_socket opens a socket based on a host url
+ */
+int open_socket(char *host, char *port);
 
 /*
  * bind_to_port binds to port 30000

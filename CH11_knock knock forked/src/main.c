@@ -33,6 +33,9 @@ int main(){
 		fprintf(stderr, "Can't map the handler");
 		exit(2);
 	}
+	/*
+	 * After the server receives CTRL-C all child instances are closed
+	 */
 	// open socket
 	listener_d = open_listener_socket();
 	// BIND
@@ -51,31 +54,51 @@ int main(){
 						&address_size);
 		if (connect_d == -1)
 			error("Can't open secondary socket");
-		// BEGIN to talk
-		say(connect_d, "Knock! knock!\n");
 
-		if (!read_in(connect_d, buf, 80))
-			puts(buf);
+		// Fork the code and spin off a new child to handle this request
+		pid_t pid;
 
-		if (!strncasecmp(buf, "Who's there?", 12)) {
-			puts(buf);
-			say(connect_d, "Oscar\n");
+		pid = fork();
+		/* fork()
+		 * function returns 0 to the child process, and it will return a
+		 * nonzero value to the parent process
+		 */
+		if (pid == -1) { // there is an issue with the forking
+			error("Can't fork the process %s\n");
+		}
+		if (pid) // this is executed by the parent process only
+			close(connect_d); // the parent doesn't need the connect_d process
+		if (!pid) { // this is executed by the child process only
+
+			// the child doesn't use the listener socket!
+			close(listener_d);
+			// BEGIN to talk
+			say(connect_d, "Knock! knock!\n");
 
 			if (!read_in(connect_d, buf, 80))
 				puts(buf);
 
-			if (!strncasecmp(buf, "Oscar who?\n", 10)) {
+			if (!strncasecmp(buf, "Who's there?", 12)) {
 				puts(buf);
-				say(connect_d,
-						"Oscar silly question, you get a silly answer\n");
+				say(connect_d, "Oscar\n");
+
+				if (!read_in(connect_d, buf, 80))
+					puts(buf);
+
+				if (!strncasecmp(buf, "Oscar who?\n", 10)) {
+					puts(buf);
+					say(connect_d,
+							"Oscar silly question, you get a silly answer\n");
+				}
 			}
+
+			say(connect_d, "Bye bye!\r\n");
+			// close the connection
+			close(connect_d);
+			// close the process
+			exit(0);
+			// end of child code
 		}
-
-
-		say(connect_d, "Bye bye!\r\n");
-		//close the connection
-		close(connect_d);
-
 	}
 	return 0;
 }
@@ -86,8 +109,8 @@ int main(){
  *
  */
 void handle_shutdown(int sig) {
-	if (listener_d)
-		close(listener_d);
+	if (listener_d) // check for any open connections
+		close(listener_d); // and close these
 	fprintf(stderr, "Bye!\n");
 	exit(0);
 }

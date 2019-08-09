@@ -44,3 +44,6 @@ int compare_names(const void* a, const void* b){
 // a = ptr --> index i --> "Karen/0"
 // (char**) a; --> (char*) index i --> "Karen/0"
 //
+// Bij een type const void* wat een generieke pointer is, moet je eerst de variabale casten naar
+// het juiste type voordat je deze kan gebruiken!!
+//

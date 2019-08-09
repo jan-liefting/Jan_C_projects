@@ -9,10 +9,12 @@
 #include "helper.h"
 
 int main(int argc, char *argv[]){
-	int d_sock = open_socket("www.google.com", "80");
+	int d_sock = open_socket("www.jskf.nl", "80");
 
 	char buf[255];
-	sprintf(buf, "GET /index.html http/1.1\r\n");
+	sprintf(buf, "GET /index.html HTTP/1.1\r\n");
+	say(d_sock, buf);
+	sprintf(buf, "Host: www.jskf.nl\r\n\r\n");
 	say(d_sock, buf);
 
 	char rec[256];

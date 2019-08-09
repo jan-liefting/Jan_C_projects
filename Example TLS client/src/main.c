@@ -78,7 +78,7 @@ int main(int count, char *strings[]) {
 	int server;
 	SSL *ssl;
 	char buf[1024];
-	char acClientRequest[1024] = { 0 };
+//	char acClientRequest[1024] = { 0 };
 	int bytes;
 	char *hostname, *portnum;
 
@@ -98,25 +98,32 @@ int main(int count, char *strings[]) {
 		ERR_print_errors_fp(stderr);
 	else {
 
-		char acUsername[16] = { 0 };
-		char acPassword[16] = { 0 };
-		const char *cpRequestMessage =
-				"<Body>\
-                              <UserName>%s<UserName>\
- <Password>%s<Password>\
- <\Body>";
-
-		printf("Enter the User Name : ");
-		scanf("%s", acUsername);
-
-		printf("\n\nEnter the Password : ");
-		scanf("%s", acPassword);
-
-		sprintf(acClientRequest, cpRequestMessage, acUsername, acPassword); /* construct reply */
+//		char acUsername[16] = { 0 };
+//		char acPassword[16] = { 0 };
+//		const char *cpRequestMessage =
+//				"<Body>\
+//                              <UserName>%s<UserName>\
+// <Password>%s<Password>\
+// <\Body>";
+//
+//		printf("Enter the User Name : ");
+//		scanf("%s", acUsername);
+//
+//		printf("\n\nEnter the Password : ");
+//		scanf("%s", acPassword);
+//
+//		sprintf(acClientRequest, cpRequestMessage, acUsername, acPassword); /* construct reply */
 
 		printf("\n\nConnected with %s encryption\n", SSL_get_cipher(ssl));
 		ShowCerts(ssl); /* get any certs */
-		SSL_write(ssl, acClientRequest, strlen(acClientRequest)); /* encrypt & send message */
+
+
+		sprintf(buf, "GET /index.html HTTP/1.1\r\n");
+		SSL_write(ssl, buf, strlen(buf));
+		sprintf(buf, "Host: www.jskf.nl\r\n\r\n");
+		SSL_write(ssl, buf, strlen(buf));
+
+//		SSL_write(ssl, acClientRequest, strlen(acClientRequest)); /* encrypt & send message */
 		bytes = SSL_read(ssl, buf, sizeof(buf)); /* get reply & decrypt */
 		buf[bytes] = 0;
 		printf("Received: \"%s\"\n", buf);

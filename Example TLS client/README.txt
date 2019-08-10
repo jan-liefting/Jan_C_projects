@@ -5,3 +5,4 @@ README.txt
  Voorbeeld voor deze code komt van:
  https://aticleworld.com/ssl-server-client-using-openssl-in-c/
  
+ 

@@ -15,7 +15,9 @@ int main(int argc, char *argv[]){
 	char buf[255];
 	sprintf(buf, "GET /index.html HTTP/1.1\r\n");
 	say(d_sock, buf);
+	printf("Request:\n%s", buf);
 	sprintf(buf, "Host: www.jskf.nl\r\n\r\n");
+	printf("%s",buf);
 	say(d_sock, buf);
 
 	char rec[256];
@@ -26,7 +28,7 @@ int main(int argc, char *argv[]){
 			error("Can't read from the server");
 		// add /0 to finalize the string
 		rec[bytesrecv] = '\0';
-		printf("%s", rec);
+		printf("Response server:\n%s", rec);
 		// next
 		bytesrecv = recv(d_sock, rec, 255, 0);
 	}

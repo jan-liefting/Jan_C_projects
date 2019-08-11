@@ -26,13 +26,17 @@ pthread_mutex_t a_lock = PTHREAD_MUTEX_INITIALIZER;
 void *drink_lots(void *a)
 {
 	int i;
+	pthread_mutex_lock(&a_lock);
 	for(i = 0; i < 100000; i++)
 	{
 		// start of atomic function
-		pthread_mutex_lock(&a_lock);
+		//pthread_mutex_lock(&a_lock);
 		beers -= 1;
-		pthread_mutex_unlock(&a_lock);
+		//pthread_mutex_unlock(&a_lock);
 	}
+	pthread_mutex_unlock(&a_lock);
+
+	printf("beers = %i\n", beers);
 	return NULL;
 }
 

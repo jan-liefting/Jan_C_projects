@@ -17,6 +17,9 @@
 // globals
 int beers = 2000000;
 
+// MUTEX
+pthread_mutex_t a_lock = PTHREAD_MUTEX_INITIALIZER;
+
 /*
  * drink_lots lowers the global variable beers by 100.000
  */
@@ -24,7 +27,12 @@ void *drink_lots(void *a)
 {
 	int i;
 	for(i = 0; i < 100000; i++)
+	{
+		// start of atomic function
+		pthread_mutex_lock(&a_lock);
 		beers -= 1;
+		pthread_mutex_unlock(&a_lock);
+	}
 	return NULL;
 }
 
@@ -43,6 +51,8 @@ int main(int argc, char **argv)
 	for(t = 0; t < 20; t++)
 		if(pthread_join(threads[t], &result) == -1)
 			perror("Can't join thread t0");
+
+	printf("There are now %i bottles of beer on the wall\n", beers);
 
 	return (0);
 }

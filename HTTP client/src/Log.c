@@ -11,13 +11,16 @@
 // includes
 #include "Log.h"
 
+//globals
+static int logfile = 0;
+
 /*
  * when called it returns a statically allocated string which
  * holds the system time stamp
  * format: "Tue May 21 13:46:22 1991\n"
  *
  */
-char *now()
+static char *now()
 {
 	time_t t;
 
@@ -27,8 +30,50 @@ char *now()
 	return asctime(localtime(&t));
 }
 
+/*
+ * initialize log file to signal that we need to keep track of
+ * the logs
+ */
 void init_logfile(void)
 {
 	logfile = 1;
+
+	// initialize the log file
+
 	return;
+}
+
+void pause_logfile(void)
+{
+	logfile =0;
+
+	return;
+}
+
+void resume_logfile(void)
+{
+	logfile = 1;
+
+	return;
+}
+
+void close_logfile(void)
+{
+	logfile = 0;
+
+	// close the log file
+
+	return;
+}
+
+/*
+ * places the message on the log, adding a timestamp
+ * if the logfile is disabled it returns -1
+ */
+int log_message(char *message)
+{
+	if(!logfile)
+		return -1;
+	printf("%s\t%s", now(), message);
+	return 1;
 }

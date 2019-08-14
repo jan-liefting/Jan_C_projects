@@ -52,21 +52,21 @@ int http_get(int connection, const char *path, const char *host)
 
 	sprintf(get_command, "GET /%s HTTP/1.1\r\n", path);
 
-	printf("%s%s",now(), get_command);
+	log_message(get_command);
 
 	if(send(connection, get_command, strlen(get_command), 0) == -1)
 		return -1;
 
 	sprintf(get_command, "Host: %s\r\n", host);
 
-	//printf("%s",get_command);
+	log_message(get_command);
 
 	if(send(connection, get_command, strlen(get_command), 0) == -1)
 		return -1;
 
 	sprintf(get_command, "Connection: close\r\n\r\n");
 
-	//printf("%s",get_command);
+	log_message(get_command);
 
 	if(send(connection, get_command, strlen(get_command), 0) == -1)
 		return -1;

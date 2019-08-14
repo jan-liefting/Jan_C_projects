@@ -16,10 +16,12 @@
 #include <stdio.h>
 #include <errno.h>
 #include <time.h>
+#include <string.h>
 
-//globals
-static int logfile;
 
 // prototypes
-char *now(void);
 void init_logfile(void);
+void pause_logfile(void);
+void resume_logfile(void);
+void close_logfile(void);
+int log_message(char *);

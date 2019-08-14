@@ -24,6 +24,7 @@
  */
 int main(int argc, char *argv[])
 {
+	init_logfile(); // keep track of log
 	int client_connection;
 	char *host, *path;
 	struct hostent *host_name;

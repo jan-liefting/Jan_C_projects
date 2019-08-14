@@ -30,14 +30,18 @@
 int parse_url(char *uri, char **host, char **path)
 {
 	char *pos;
+
 	pos = strstr(uri, "//");
 
 	if(!pos)
 	{
 		return -1;
 	}
+
 	*host = pos + 2;
+
 	pos = strchr(*host, '/');
+
 	if(!pos)
 	{
 		*path = NULL;
@@ -47,6 +51,7 @@ int parse_url(char *uri, char **host, char **path)
 		*pos = '\0';
 		*path = pos + 1;
 	}
+
 	return 0;
 }
 

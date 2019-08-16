@@ -13,6 +13,7 @@
 
 //globals
 static int logfile = 0;
+static int initialized = 0;
 
 /*
  * when called it returns a statically allocated string which
@@ -36,7 +37,7 @@ static char *now()
  */
 void init_logfile(void)
 {
-	logfile = 1;
+	logfile = initialized = 1;
 
 	// initialize the log file
 
@@ -45,13 +46,20 @@ void init_logfile(void)
 
 void pause_logfile(void)
 {
-	logfile =0;
+	if(initialized)
+		logfile = 0;
+	else
+		perror("Can't pauze the log; it's not initialized");
 
 	return;
 }
 
 void resume_logfile(void)
 {
+	if(initialized)
+		logfile = 1;
+	else
+		perror("Can't resume the log; it's not initialized");
 	logfile = 1;
 
 	return;
@@ -59,7 +67,7 @@ void resume_logfile(void)
 
 void close_logfile(void)
 {
-	logfile = 0;
+	logfile = initialized = 0;
 
 	// close the log file
 
@@ -69,11 +77,16 @@ void close_logfile(void)
 /*
  * places the message on the log, adding a timestamp
  * if the logfile is disabled it returns -1
+ * if the logfile is not initialized, the routine exits through perror()
  */
 int log_message(char *message)
 {
+	if(!initialized)
+			perror("Can't process the message; log is not initialized");
+
 	if(!logfile)
 		return -1;
+
 	printf("%s\t%s", now(), message);
 	return 1;
 }

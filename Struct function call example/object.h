@@ -8,9 +8,9 @@
 #ifndef OBJECT_H_
 #define OBJECT_H_
 
-//#define NUM_OBJECTS 10
 // Definition
 // typedef function
+// a function that requires two ints and returns an int result
 typedef int (*Operation)(int a, int b);
 // typedef of the object
 typedef struct {

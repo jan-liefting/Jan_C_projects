@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
 
 	char *feeds[] = { "http://feeds.bbci.co.uk/news/rss.xml",
 			"http://feeds.nos.nl/nosnieuwsalgemeen" };
-	char *scriptname = "/home/jan/Desktop/rssgossip.py";
+	char *scriptname = "/home/jan/git/Jan_C_projects/CH10_fork2/rssgossip.py";
 	char *python = "/usr/bin/python";
 	int times = 2;
 	char *phrase = argv[1];
@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
 		char *vars[] = { var, NULL };
 
 		// need to create these for each iteration
-		// because when the child 'dies' it closes the pipe is closed
+		// because when the child 'dies' it closes the pipe
 		int fd[2];
 		if (pipe(fd) == -1) {
 			error("Can't create the pipe");
